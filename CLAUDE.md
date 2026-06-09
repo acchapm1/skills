@@ -54,6 +54,12 @@ When changing one engineering skill, check whether it reads or writes config pro
 - `scripts/link-skills.sh` — symlinks every active `SKILL.md`'s parent dir into `~/.claude/skills/` so the local Claude CLI can use them. Skips `deprecated/` and `node_modules/`, and refuses to run if `~/.claude/skills` is itself a symlink into this repo.
 - `scripts/list-skills.sh` — lists every `SKILL.md` path in the repo.
 
+The next three link a **curated** subset (named list inside each script) rather than every skill. They share `link-skills.sh`'s self-link guard, warn-and-skip on a missing skill name, and resolve each skill by `find`-ing its bucket. The rationale for the global-vs-local split lives in the maintainer's second brain (`mattpocock-skills-usage-guide.md`).
+
+- `scripts/global-skills.sh` — links the zero-config, domain-agnostic core into `~/.claude/skills/` (global): `grill-me`, `diagnose`, `handoff`, `write-a-skill`, `caveman`.
+- `scripts/local-instruction.sh` — run from inside a *target* instructional/writeup repo; links into that repo's `./.claude/skills/`: `scaffold-exercises`, `teach`. Refuses to run from inside this skills repo.
+- `scripts/local-coding.sh` — run from inside a *target* coding/infra repo; links into that repo's `./.claude/skills/`: `grill-with-docs`, `improve-codebase-architecture`, `prototype`, `git-guardrails-claude-code`, `setup-pre-commit`, `tdd`. Pass `--with-issues` to also link the issue-tracker pipeline (`setup-matt-pocock-skills`, `to-prd`, `to-issues`, `triage`). Refuses to run from inside this skills repo.
+
 ## Conventions
 
 - The skill named `setup-matt-pocock-skills` and the README title ("Matt Pocock Skills", "Skills For Real Engineers") carry the upstream branding; treat renaming as a deliberate, repo-wide change rather than an incidental edit.
